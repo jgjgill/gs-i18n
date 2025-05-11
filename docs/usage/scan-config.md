@@ -1,0 +1,3 @@
+# scan-confing
+
+WIP...

@@ -29,7 +29,10 @@
     "dev-cli": "ts-node src/cli.ts",
     "test-scan": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' node_modules/i18next-scanner/bin/cli.js --config i18next-scanner.config.cjs",
     "test": "pnpm run test-scan && ts-node src/download.ts",
-    "publish-package": "pnpm run build && changeset version && changeset publish"
+    "publish-package": "pnpm run build && changeset version && changeset publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "bin": "./dist/index.js",
   "keywords": [],
@@ -47,6 +50,7 @@
     "picocolors": "^1.1.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitepress": "^1.6.3"
   }
 }
