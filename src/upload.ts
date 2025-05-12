@@ -1,9 +1,9 @@
-import { GoogleSpreadsheet } from "google-spreadsheet";
-import { loadSpreadsheetInfo } from "./googleSheets";
-import fs from "fs";
-import path from "path";
-import { sheetId, addNewSheet, getScannerInfo } from "./libs";
+import fs from "node:fs";
+import path from "node:path";
 import { each, fx, reduce } from "@fxts/core";
+import type { GoogleSpreadsheet } from "google-spreadsheet";
+import { loadSpreadsheetInfo } from "./googleSheets";
+import { addNewSheet, getScannerInfo, sheetId } from "./libs";
 
 type TranslationValue = string;
 type LanguageCode = string;
@@ -11,19 +11,19 @@ type TranslationKey = string;
 
 // 번역 데이터 타입 정의
 interface TranslationsByLanguage {
-  [language: LanguageCode]: TranslationValue;
+	[language: LanguageCode]: TranslationValue;
 }
 
 interface TranslationKeyMap {
-  [key: TranslationKey]: TranslationsByLanguage;
+	[key: TranslationKey]: TranslationsByLanguage;
 }
 
 interface TranslationMap {
-  [key: TranslationKey]: TranslationsByLanguage;
+	[key: TranslationKey]: TranslationsByLanguage;
 }
 
 interface SheetRow {
-  [columnName: string]: string;
+	[columnName: string]: string;
 }
 
 /**
@@ -44,34 +44,34 @@ interface SheetRow {
  */
 
 function updateSheetRow(
-  key: string,
-  translations: TranslationsByLanguage
+	key: string,
+	translations: TranslationsByLanguage,
 ): SheetRow {
-  const { columnKeyToHeader } = getScannerInfo();
+	const { columnKeyToHeader } = getScannerInfo();
 
-  const updatedRow = reduce(
-    makeUpdateSheetRow,
-    { [columnKeyToHeader.key]: key },
-    Object.entries(translations)
-  );
+	const updatedRow = reduce(
+		makeUpdateSheetRow,
+		{ [columnKeyToHeader.key]: key },
+		Object.entries(translations),
+	);
 
-  return updatedRow;
+	return updatedRow;
 }
 
 function makeUpdateSheetRow(
-  result: SheetRow,
-  language: [LanguageCode, TranslationValue]
+	result: SheetRow,
+	language: [LanguageCode, TranslationValue],
 ): SheetRow {
-  const { columnKeyToHeader } = getScannerInfo();
-  const [key, value] = language;
+	const { columnKeyToHeader } = getScannerInfo();
+	const [key, value] = language;
 
-  const header = columnKeyToHeader[key];
+	const header = columnKeyToHeader[key];
 
-  if (header) {
-    result[header] = value;
-  }
+	if (header) {
+		result[header] = value;
+	}
 
-  return result;
+	return result;
 }
 
 /**
@@ -81,43 +81,43 @@ function makeUpdateSheetRow(
  */
 
 async function updateTranslationsFromKeyMapToSheet(
-  doc: GoogleSpreadsheet,
-  translatedMap: TranslationMap
+	doc: GoogleSpreadsheet,
+	translatedMap: TranslationMap,
 ): Promise<void> {
-  const title = "번역 시트";
-  const { headerValues, columnKeyToHeader } = getScannerInfo();
+	const title = "번역 시트";
+	const { headerValues, columnKeyToHeader } = getScannerInfo();
 
-  await doc.updateProperties({ title });
+	await doc.updateProperties({ title });
 
-  const sheet =
-    doc.sheetsById[Number(sheetId ?? "0")] ??
-    (await addNewSheet(doc, title, sheetId ?? "0", headerValues));
+	const sheet =
+		doc.sheetsById[Number(sheetId ?? "0")] ??
+		(await addNewSheet(doc, title, sheetId ?? "0", headerValues));
 
-  await sheet.setHeaderRow(headerValues);
-  const rows = await sheet.getRows();
+	await sheet.setHeaderRow(headerValues);
+	const rows = await sheet.getRows();
 
-  const existKeys = reduce(
-    (acc, row) => {
-      const key = row.get(columnKeyToHeader.key);
+	const existKeys = reduce(
+		(acc, row) => {
+			const key = row.get(columnKeyToHeader.key);
 
-      if (translatedMap[key]) {
-        acc[key] = true;
-      }
+			if (translatedMap[key]) {
+				acc[key] = true;
+			}
 
-      return acc;
-    },
-    {} as Record<string, boolean>,
-    rows
-  );
+			return acc;
+		},
+		{} as Record<string, boolean>,
+		rows,
+	);
 
-  const addedRows = fx(Object.entries(translatedMap))
-    .filter(([key]) => !existKeys[key])
-    .map(([key, translations]) => updateSheetRow(key, translations))
-    .toArray();
+	const addedRows = fx(Object.entries(translatedMap))
+		.filter(([key]) => !existKeys[key])
+		.map(([key, translations]) => updateSheetRow(key, translations))
+		.toArray();
 
-  if (addedRows.length > 0) {
-    await sheet.addRows(addedRows);
-  }
+	if (addedRows.length > 0) {
+		await sheet.addRows(addedRows);
+	}
 }
 
 /**
@@ -128,17 +128,17 @@ async function updateTranslationsFromKeyMapToSheet(
  */
 
 function gatherKeyMap(
-  translatedKeyMap: TranslationKeyMap,
-  language: string,
-  json: Record<string, string>
+	translatedKeyMap: TranslationKeyMap,
+	language: string,
+	json: Record<string, string>,
 ): void {
-  each(([key, translated]) => {
-    if (!translatedKeyMap[key]) {
-      translatedKeyMap[key] = {};
-    }
+	each(([key, translated]) => {
+		if (!translatedKeyMap[key]) {
+			translatedKeyMap[key] = {};
+		}
 
-    translatedKeyMap[key][language] = translated;
-  }, Object.entries(json));
+		translatedKeyMap[key][language] = translated;
+	}, Object.entries(json));
 }
 
 /**
@@ -148,35 +148,35 @@ function gatherKeyMap(
  */
 
 export async function updateSheetFromJson(): Promise<void> {
-  try {
-    const { localePath, namespace } = getScannerInfo();
-    const translatedKeyMap: TranslationKeyMap = {};
+	try {
+		const { localePath, namespace } = getScannerInfo();
+		const translatedKeyMap: TranslationKeyMap = {};
 
-    const doc = await loadSpreadsheetInfo();
-    const languageFolders = await fs.promises.readdir(localePath);
+		const doc = await loadSpreadsheetInfo();
+		const languageFolders = await fs.promises.readdir(localePath);
 
-    for (const language of languageFolders) {
-      const localeJsonFilePath = path.join(
-        localePath,
-        language,
-        `${namespace}.json`
-      );
+		for (const language of languageFolders) {
+			const localeJsonFilePath = path.join(
+				localePath,
+				language,
+				`${namespace}.json`,
+			);
 
-      try {
-        const fileContent = await fs.promises.readFile(
-          localeJsonFilePath,
-          "utf8"
-        );
-        const json = JSON.parse(fileContent);
+			try {
+				const fileContent = await fs.promises.readFile(
+					localeJsonFilePath,
+					"utf8",
+				);
+				const json = JSON.parse(fileContent);
 
-        gatherKeyMap(translatedKeyMap, language, json);
-      } catch (error) {
-        throw new Error(`Upload Content Error: ${error}`);
-      }
-    }
+				gatherKeyMap(translatedKeyMap, language, json);
+			} catch (error) {
+				throw new Error(`Upload Content Error: ${error}`);
+			}
+		}
 
-    await updateTranslationsFromKeyMapToSheet(doc, translatedKeyMap);
-  } catch (error) {
-    throw new Error(`Upload Sheet Error: ${error}`);
-  }
+		await updateTranslationsFromKeyMapToSheet(doc, translatedKeyMap);
+	} catch (error) {
+		throw new Error(`Upload Sheet Error: ${error}`);
+	}
 }

@@ -1,13 +1,13 @@
 interface ScannerConfig {
-  defaultLanguage: string;
-  selectedLanguages: string[];
-  columnKeyToHeader: Record<string, string>;
+	defaultLanguage: string;
+	selectedLanguages: string[];
+	columnKeyToHeader: Record<string, string>;
 }
 
 export const generateConfigContent = ({
-  defaultLanguage,
-  selectedLanguages,
-  columnKeyToHeader,
+	defaultLanguage,
+	selectedLanguages,
+	columnKeyToHeader,
 }: ScannerConfig) => `
 // i18next-scanner 설정 파일
 // 자동 생성됨: ${new Date().toISOString()}
