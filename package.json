@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --out-dir dist",
-    "dev-cli": "ts-node src/cli.ts",
+    "dev-cli": "ts-node src/index.ts",
     "test-scan": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' node_modules/i18next-scanner/bin/cli.js --config i18next-scanner.config.cjs",
     "test": "pnpm run test-scan && ts-node src/download.ts",
     "publish-package": "pnpm run build && changeset version && changeset publish",

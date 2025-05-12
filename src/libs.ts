@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import fs from "node:fs";
 import path from "node:path";
 import dotenv from "dotenv";
 import type {
@@ -15,6 +16,67 @@ export const googlePrivateKey = process.env.GOOGLE_PRIVATE_KEY;
 export const sheetId = process.env.SHEET_ID;
 
 export const NOT_AVAILABLE_CELL = "_N/A";
+
+export interface GsI18nConfig {
+	spreadsheet: {
+		docId: string;
+		sheetId: number;
+	};
+	googleServiceAccount: {
+		email: string;
+		privateKey: string;
+	};
+}
+
+let config: GsI18nConfig | null = null;
+
+export function getConfigPath(): string {
+	return path.join(process.cwd(), "gs-i18n.json");
+}
+
+export function configExists(): boolean {
+	return fs.existsSync(getConfigPath());
+}
+
+export function loadConfig() {
+	const configPath = getConfigPath();
+
+	if (!configExists()) {
+		throw new Error(
+			"gs-i18n.json 설정 파일을 찾을 수 없습니다. 'npx gs-i18n init' 명령어로 설정 파일을 생성하세요.",
+		);
+	}
+
+	try {
+		const configContent = fs.readFileSync(configPath, "utf-8");
+		config = JSON.parse(configContent) as GsI18nConfig;
+
+		return config;
+	} catch (error) {
+		throw new Error(`설정 파일 로드 실패: ${error}`);
+	}
+}
+
+export function createConfigTemplate(): string {
+	const configTemplate: GsI18nConfig = {
+		spreadsheet: {
+			docId: "YOUR_SPREADSHEET_ID",
+			sheetId: 0,
+		},
+		googleServiceAccount: {
+			email: "YOUR_SERVICE_ACCOUNT_EMAIL@project.iam.gserviceaccount.com",
+			privateKey:
+				"-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n",
+		},
+	};
+
+	return JSON.stringify(configTemplate, null, 2);
+}
+
+export function getSpreadsheetDocId(): string {
+	const config = loadConfig();
+	return config.spreadsheet.docId;
+}
 
 export async function runCommand(command: string) {
 	return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {

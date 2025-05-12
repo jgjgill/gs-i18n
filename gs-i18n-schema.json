@@ -1,0 +1,36 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "gs-i18n Config Schema",
+	"type": "object",
+	"required": ["spreadsheet", "googleServiceAccount"],
+	"properties": {
+		"spreadsheet": {
+			"type": "object",
+			"required": ["docId"],
+			"properties": {
+				"docId": {
+					"type": "string",
+					"description": "Google Spreadsheet document ID"
+				},
+				"sheetId": {
+					"type": "integer",
+					"default": 0,
+					"description": "Specific sheet ID within the spreadsheet"
+				}
+			}
+		},
+		"googleServiceAccount": {
+			"type": "object",
+			"required": ["email", "privateKey"],
+			"properties": {
+				"email": {
+					"type": "string",
+					"format": "email"
+				},
+				"privateKey": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

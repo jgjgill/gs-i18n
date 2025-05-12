@@ -4,7 +4,12 @@ import * as prompts from "@clack/prompts";
 import colors from "picocolors";
 import { updateJsonFromSheet } from "./download";
 import { loadSpreadsheetInfo } from "./googleSheets";
-import { runCommand } from "./libs";
+import {
+	configExists,
+	createConfigTemplate,
+	getConfigPath,
+	runCommand,
+} from "./libs";
 import { generateConfigContent } from "./scannerTemplate";
 import { updateSheetFromJson } from "./upload";
 
@@ -12,6 +17,13 @@ export async function main() {
 	prompts.intro(colors.blue("Google 스프레드시트 관리 도구"));
 
 	try {
+		const configOk = checkAndNotifyConfigIssues();
+
+		if (!configOk) {
+			prompts.outro("설정 문제로 인해 종료합니다.");
+			return;
+		}
+
 		await mainMenu();
 	} catch (error) {
 		if (error instanceof Error) {
@@ -69,6 +81,28 @@ async function mainMenu() {
 	if (!prompts.isCancel(continueAction) && continueAction) {
 		await mainMenu();
 	}
+}
+
+function checkAndNotifyConfigIssues() {
+	const configPath = getConfigPath();
+
+	if (!configExists()) {
+		prompts.log.error("gs-i18n.json 설정 파일을 생성합니다.");
+
+		try {
+			const template = createConfigTemplate();
+			fs.writeFileSync(configPath, template, "utf-8");
+			prompts.log.success(
+				`${configPath} 파일이 생성되었습니다. 값을 올바르게 수정한 후 다시 실행해주세요.`,
+			);
+		} catch (error) {
+			prompts.log.error(`설정 파일 생성 실패, ${error}`);
+		}
+
+		return true;
+	}
+
+	return true;
 }
 
 async function showSpreadsheetInfo() {
