@@ -1,6 +1,6 @@
 # gs-i18n
 
-> Google Sheets와 i18next를 활용한 다국어 관리 자동화 CLI 도구
+> Google Sheets와 i18next를 활용한 다국어 관리 CLI 도구
 
 **gs-i18n**은 Google Spreadsheet를 활용하여 다국어 번역을 효율적으로 관리할 수 있는 CLI 도구입니다. 개발자와 번역가가 협업하기 쉽도록 설계되었으며, 코드와 스프레드시트 간의 양방향 동기화를 지원합니다.
 

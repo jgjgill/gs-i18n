@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "gs-i18n"
   text: "Google Sheets i18n automation CLI"
-  tagline: Google Sheets와 i18next를 활용한 다국어 관리 자동화 CLI 도구
+  tagline: Google Sheets와 i18next를 활용한 다국어 관리 CLI 도구
   actions:
     - theme: brand
       text: Introduce
