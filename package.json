@@ -2,7 +2,21 @@
   "name": "gs-i18n",
   "version": "1.0.1",
   "private": false,
-  "description": "",
+  "description": "Google Sheets와 i18next를 연동한 다국어 관리 CLI 도구",
+  "keywords": ["cli", "google-sheets", "i18n"],
+  "author": {
+    "name": "jgjgill",
+    "email": "dbdltm22@naver.com",
+    "url": "https://github.com/jgjgill"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgjgill/gs-i18n.git"
+  },
+  "homepage": "https://jgjgill.github.io/gs-i18n/",
+  "bugs": {
+    "url": "https://github.com/jgjgill/gs-i18n/issues"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -36,8 +50,6 @@
     "lint": "biome check --write ."
   },
   "bin": "./dist/index.js",
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
   "devDependencies": {
