@@ -39,13 +39,11 @@ export function configExists(): boolean {
 }
 
 export function loadConfig() {
-	const configPath = getConfigPath();
-
 	if (!configExists()) {
-		throw new Error(
-			"gs-i18n.json 설정 파일을 찾을 수 없습니다. 'npx gs-i18n init' 명령어로 설정 파일을 생성하세요.",
-		);
+		throw new Error("gs-i18n.json 설정 파일을 찾을 수 없습니다.");
 	}
+
+	const configPath = getConfigPath();
 
 	try {
 		const configContent = fs.readFileSync(configPath, "utf-8");
@@ -58,7 +56,9 @@ export function loadConfig() {
 }
 
 export function createConfigTemplate(): string {
-	const configTemplate: GsI18nConfig = {
+	const configTemplate = {
+		$schema:
+			"https://raw.githubusercontent.com/jgjgill/gs-i18n/main/gs-i18n-schema.json",
 		spreadsheet: {
 			docId: "YOUR_SPREADSHEET_ID",
 			sheetId: 0,
@@ -76,6 +76,19 @@ export function createConfigTemplate(): string {
 export function getSpreadsheetDocId(): string {
 	const config = loadConfig();
 	return config.spreadsheet.docId;
+}
+
+export function getSpreadsheetSheetId(): number {
+	const config = loadConfig();
+	return config.spreadsheet.sheetId;
+}
+export function getGoogleServiceAccountEmail(): string {
+	const config = loadConfig();
+	return config.googleServiceAccount.email;
+}
+export function getGooglePrivateKey(): string {
+	const config = loadConfig();
+	return config.googleServiceAccount.privateKey.replace(/\\n/g, "\n");
 }
 
 export async function runCommand(command: string) {
