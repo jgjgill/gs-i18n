@@ -1,9 +1,13 @@
 {
   "name": "gs-i18n",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "private": false,
   "description": "Google Sheets와 i18next를 연동한 다국어 관리 CLI 도구",
-  "keywords": ["cli", "google-sheets", "i18n"],
+  "keywords": [
+    "cli",
+    "google-sheets",
+    "i18n"
+  ],
   "author": {
     "name": "jgjgill",
     "email": "dbdltm22@naver.com",
