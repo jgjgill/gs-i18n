@@ -2,7 +2,7 @@
 
 > Google Sheets와 i18next를 활용한 다국어 관리 CLI 도구
 
-**gs-i18n**은 Google Spreadsheet를 활용하여 다국어 번역을 효율적으로 관리할 수 있는 CLI 도구입니다. 개발자와 번역가가 협업하기 쉽도록 설계되었으며, 코드와 스프레드시트 간의 양방향 동기화를 지원합니다.
+**gs-i18n**은 Google Spreadsheet를 활용하여 다국어 번역을 효율적으로 관리할 수 있는 CLI 도구에요. 개발자와 번역가가 하나의 중앙화된 플랫폼에서 협업할 수 있도록 설계되었어요.
 
 ## 특징
 
@@ -31,15 +31,22 @@ gs-i18n
 2. Google Sheets API 활성화
 3. 서비스 계정 생성 및 JSON 키 다운로드
 
-### 2. 환경변수 설정
+### 2. `gs-i18n.json` 설정
 
-프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 설정:
+프로젝트 루트에 `gs-i18n.json` 파일을 생성하고 다음 내용을 설정
 
-```env
-SPREADSHEET_DOC_ID=your_spreadsheet_id
-GOOGLE_SERVICE_ACCOUNT_EMAIL=your_service_account_email
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-SHEET_ID=0  # 기본 시트 ID
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/jgjgill/gs-i18n/main/gs-i18n-schema.json",
+  "spreadsheet": {
+    "docId": "YOUR_SPREADSHEET_ID",
+    "sheetId": 0
+  },
+  "googleServiceAccount": {
+    "email": "YOUR_SERVICE_ACCOUNT_EMAIL@project.iam.gserviceaccount.com",
+    "privateKey": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n"
+  }
+}
 ```
 
 ### 3. Google Spreadsheet 권한 설정
@@ -56,7 +63,7 @@ SHEET_ID=0  # 기본 시트 ID
 npx gs-i18n
 ```
 
-실행하면 다음과 같은 메뉴가 표시됩니다:
+실행하면 다음과 같은 메뉴가 표시되어요.
 
 ```
 Google 스프레드시트 관리 도구
@@ -102,7 +109,7 @@ npx gs-i18n
 
 ### 스프레드시트 정보 조회하기
 
-연결된 Google Spreadsheet의 기본 정보를 확인합니다.
+연결된 Google Spreadsheet의 기본 정보를 확인해요.
 
 ```
 스프레드시트 제목: My i18n Project
@@ -114,7 +121,7 @@ npx gs-i18n
 
 ### i18next-scanner 파일 생성하기
 
-프로젝트에 맞는 i18next-scanner 설정 파일을 인터랙티브하게 생성합니다.
+프로젝트에 맞는 i18next-scanner 설정 파일을 인터랙티브하게 생성해요.
 
 - 지원 언어 선택 (다중 선택 가능)
 - 기본 언어 설정
@@ -122,7 +129,7 @@ npx gs-i18n
 
 ### 다국어 관련 기본 파일 구성하기
 
-코드에서 사용된 번역 키를 스캔하여 기본 번역 파일 구조를 생성합니다.
+코드에서 사용된 번역 키를 스캔하여 기본 번역 파일 구조를 생성해요.
 
 ```
 public/
@@ -137,7 +144,7 @@ public/
 
 ### 다국어 코드 시트에 반영하기 (Upload)
 
-로컬 JSON 파일의 번역 키를 Google Sheets에 업로드합니다.
+로컬 JSON 파일의 번역 키를 Google Sheets에 업로드해요.
 
 - 새로운 키 자동 추가
 - 기존 키는 유지
@@ -145,7 +152,7 @@ public/
 
 ### 시트 번역 내용 코드에 반영하기 (Download)
 
-Google Sheets의 번역 내용을 로컬 JSON 파일에 다운로드합니다.
+Google Sheets의 번역 내용을 로컬 JSON 파일에 다운로드해요.
 
 - 번역된 내용 자동 반영
 - 파일 포맷 자동 정리
@@ -191,30 +198,33 @@ module.exports = {
 ## 프로젝트 구조
 
 ```
-my-project/
-├── .env                        # 환경변수 설정
-├── i18next-scanner.config.cjs  # i18next-scanner 설정
+project/
+├── gs-i18n.json                  # google-sheets 정보 설정
+├── i18next-scanner.config.cjs    # scanner 설정
+├── package.json
 ├── public/
-│   └── locales/               # 번역 파일 디렉토리
+│   └── locales/                 # 번역 파일
 │       ├── ko-KR/
 │       │   └── common.json
-│       └── en-US/
+│       ├── en-US/
+│       │   └── common.json
+│       └── ja-JP/
 │           └── common.json
 └── src/
-    └── your-code.tsx          # 번역 키 사용 코드
+    └── components/              # React 컴포넌트
 ```
 
 ## 자주 묻는 질문
 
-**Q: 스프레드시트를 찾을 수 없다는 오류가 발생합니다.**
-A: 서비스 계정에 스프레드시트 편집 권한이 있는지 확인하세요.
+**Q: 스프레드시트를 찾을 수 없다는 오류가 발생해요.**
+A: 서비스 계정에 스프레드시트 편집 권한이 있는지 확인해 주세요.
 
-**Q: 환경변수가 인식되지 않습니다.**
-A: `.env` 파일이 프로젝트 루트에 있는지, 올바른 형식인지 확인하세요.
+**Q: 변수가 인식되지 않아요.**
+A: `gs-i18n.json` 파일이 프로젝트 루트에 있는지, 올바른 형식인지 확인해 주세요.
 
 ### 이슈 보고
 
-버그를 발견하거나 기능 제안이 있으시면 [이슈](https://github.com/jgjgill/gs-i18n/issues/new)를 생성해주세요.
+버그를 발견하거나 기능 제안이 있으시면 [이슈](https://github.com/jgjgill/gs-i18n/issues/new)를 생성해 주세요.
 
 ## 지원
 
