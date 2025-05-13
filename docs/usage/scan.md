@@ -1,10 +1,10 @@
 # scan
 
-다국어 파일 스캔 기능은 i18next-scanner를 실행하여 코드베이스에서 번역 키를 추출하고 JSON 파일을 생성하는 기능입니다. 이는 실제 번역 작업의 기반이 되는 중요한 단계입니다.
+다국어 파일 스캔 기능은 i18next-scanner를 실행하여 코드베이스에서 번역 키를 추출하고 JSON 파일을 생성해요. 이는 실제 번역 작업의 기반이 되어요.
 
 ## 기능 개요
 
-이 기능은 다음을 수행합니다.
+다음 기능을 수행해요.
 
 - 프로젝트 코드에서 번역 함수(t, i18n.t 등) 호출 감지
 - 번역 키 자동 추출
@@ -57,7 +57,7 @@ function MyComponent() {
 
 ## 생성되는 파일 구조
 
-스캔 후 다음과 같은 파일이 생성됩니다:
+스캔 후 다음과 같은 파일이 생성되어요.
 
 ```
 public/
@@ -80,7 +80,7 @@ public/
 
 ## 설정 파일 확인
 
-스캔 기능은 `i18next-scanner.config.cjs` 파일을 사용합니다.
+스캔 기능은 `i18next-scanner.config.cjs` 파일을 사용해요.
 
 ```javascript
 module.exports = {
@@ -96,7 +96,7 @@ module.exports = {
 ```
 
 ::: warning 설정 파일 필수
-`i18next-scanner.config.cjs` 파일이 없으면 스캔을 실행할 수 없습니다. 먼저 [scan-config](/usage/scan-config) 기능을 통해 설정 파일을 생성하세요.
+`i18next-scanner.config.cjs` 파일이 없으면 스캔을 실행할 수 없어요. 먼저 [scan-config](/usage/scan-config) 기능을 통해 설정 파일을 생성해 주세요.
 :::
 
 ## 주요 특징

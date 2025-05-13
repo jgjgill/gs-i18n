@@ -1,6 +1,6 @@
 # Usage
 
-gs-i18n은 인터랙티브 CLI를 통해 Google Sheets와 i18next 번역 파일 간의 동기화를 간편하게 관리할 수 있도록 설계되었습니다. 이 섹션에서는 gs-i18n의 사용법과 전체 워크플로우를 설명합니다.
+이 섹션에서는 gs-i18n의 사용법과 전체 워크플로우를 설명해요.
 
 ## 시작하기 전에
 
@@ -24,20 +24,27 @@ gs-i18n을 사용하기 전에 아래 준비사항을 완료해야 합니다.
 2. 스프레드시트 ID 복사 (URL에서 확인 가능)
 3. 서비스 계정 이메일에 편집 권한 부여
 
-#### 3. 환경변수 설정
+#### 3. `gs-i18n.json` 설정
 
-프로젝트 루트에 `.env` 파일 생성
+`gs-i18n.json` 파일은 CLI를 실행하게 되면 프로젝트 루트에 자동으로 생성되어요.
 
-```env
-SPREADSHEET_DOC_ID=your_spreadsheet_id_here
-GOOGLE_SERVICE_ACCOUNT_EMAIL=your_service_account@project.iam.gserviceaccount.com
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-SHEET_ID=0  # 기본 시트 ID
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/jgjgill/gs-i18n/main/gs-i18n-schema.json",
+  "spreadsheet": {
+    "docId": "YOUR_SPREADSHEET_ID",
+    "sheetId": 0
+  },
+  "googleServiceAccount": {
+    "email": "YOUR_SERVICE_ACCOUNT_EMAIL@project.iam.gserviceaccount.com",
+    "privateKey": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n"
+  }
+}
 ```
 
 ## CLI 실행
 
-gs-i18n은 두 가지 방식으로 실행할 수 있습니다.
+gs-i18n은 두 가지 방식으로 실행할 수 있어요.
 
 ### npx 실행 (권장)
 
@@ -54,7 +61,7 @@ gs-i18n
 
 ## 메인 메뉴
 
-CLI를 실행하면 다음과 같은 인터랙티브 메뉴가 표시됩니다.
+CLI를 실행하면 다음과 같은 인터랙티브 메뉴가 표시되어요.
 
 ```
 Google 스프레드시트 관리 도구
@@ -70,11 +77,11 @@ Google 스프레드시트 관리 도구
 
 ## 전체 워크플로우
 
-gs-i18n의 전체 워크플로우는 다음과 같습니다.
+gs-i18n의 전체 워크플로우는 다음과 같아요.
 
 ### 1단계: 초기 설정
 
-처음 gs-i18n을 사용할 때는 다음 순서를 따르세요.
+처음 gs-i18n을 사용할 때는 다음 순서를 따라주세요.
 
 ```bash
 # 1. i18next-scanner 설정 파일 생성
@@ -104,7 +111,7 @@ npx gs-i18n
 
 ## 기능별 상세 안내
 
-각 기능의 상세한 사용법은 다음 페이지에서 확인할 수 있습니다.
+각 기능의 상세한 사용법은 다음 페이지에서 확인할 수 있어요.
 
 - [스프레드시트 정보 조회](/usage/info)
 - [i18next-scanner 설정 생성](/usage/scan-config)
@@ -148,7 +155,7 @@ gs-i18n 사용 후 생성되는 파일 구조
 
 ```
 project/
-├── .env                          # 환경변수 설정
+├── gs-i18n.json                  # google-sheets 정보 설정
 ├── i18next-scanner.config.cjs    # scanner 설정
 ├── package.json
 ├── public/
@@ -167,16 +174,15 @@ project/
 
 ::: tip 팁
 
-- 작업 전 항상 스프레드시트 정보를 확인하여 연결 상태를 점검하세요
-- 새로운 언어 추가 시 scanner 설정을 업데이트해야 합니다
-- 번역 키는 네임스페이스를 활용하여 체계적으로 관리하세요
+- 작업 전 항상 스프레드시트 정보를 확인하여 연결 상태를 점검하세요.
+- 새로운 언어 추가 시 scanner 설정을 업데이트해주세요.
   :::
 
 ::: warning 주의
 
-- 스프레드시트 편집 중에는 업로드/다운로드를 피하세요
-- 민감한 정보가 포함된 번역은 별도로 관리하세요
-- `.env` 파일은 절대 git에 커밋하지 마세요
+- 스프레드시트 편집 중에는 업로드/다운로드를 피하세요.
+- 민감한 정보가 포함된 번역은 별도로 관리하세요.
+- `gs-i18n` 파일은 절대 git에 커밋하지 마세요.
   :::
 
 ## 다음 단계
