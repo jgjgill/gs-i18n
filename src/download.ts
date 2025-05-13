@@ -10,7 +10,7 @@ import {
 	NOT_AVAILABLE_CELL,
 	addNewSheet,
 	getScannerInfo,
-	sheetId,
+	getSpreadsheetSheetId,
 } from "./libs";
 
 type LanguageMap = {
@@ -28,7 +28,7 @@ type LanguageMap = {
 async function fetchTranslationsFromSheetToJson(
 	doc: GoogleSpreadsheet,
 ): Promise<LanguageMap> {
-	if (!sheetId) {
+	if (getSpreadsheetSheetId() === undefined) {
 		throw new Error("SHEET_ID is not defined");
 	}
 
@@ -36,13 +36,11 @@ async function fetchTranslationsFromSheetToJson(
 	const { headerValues } = getScannerInfo();
 
 	const sheet =
-		doc.sheetsById[Number(sheetId)] ??
-		(await addNewSheet(doc, title, sheetId, headerValues));
+		doc.sheetsById[getSpreadsheetSheetId()] ??
+		(await addNewSheet(doc, title, getSpreadsheetSheetId(), headerValues));
 
 	await sheet.setHeaderRow(headerValues);
 	const rows = await sheet.getRows();
-
-	console.log(sheet);
 
 	const languagesMap = reduce(makeLanguagesMap, {}, rows);
 

@@ -3,7 +3,7 @@ import path from "node:path";
 import { each, fx, reduce } from "@fxts/core";
 import type { GoogleSpreadsheet } from "google-spreadsheet";
 import { loadSpreadsheetInfo } from "./googleSheets";
-import { addNewSheet, getScannerInfo, sheetId } from "./libs";
+import { addNewSheet, getScannerInfo, getSpreadsheetSheetId } from "./libs";
 
 type TranslationValue = string;
 type LanguageCode = string;
@@ -25,14 +25,6 @@ interface TranslationMap {
 interface SheetRow {
 	[columnName: string]: string;
 }
-
-/**
- * sheetId에 해당하는 시트가 없을 시 시트를 새로 생성
- * @param doc - Google 스프레드시트 문서
- * @param title - 새 시트의 제목
- * @param sheetId - 새 시트의 ID
- * @returns 생성된 워크시트
- */
 
 /**
  * 시트에 사용될 row로 데이터 형식을 변환하는 함수
@@ -90,8 +82,8 @@ async function updateTranslationsFromKeyMapToSheet(
 	await doc.updateProperties({ title });
 
 	const sheet =
-		doc.sheetsById[Number(sheetId ?? "0")] ??
-		(await addNewSheet(doc, title, sheetId ?? "0", headerValues));
+		doc.sheetsById[getSpreadsheetSheetId()] ??
+		(await addNewSheet(doc, title, getSpreadsheetSheetId(), headerValues));
 
 	await sheet.setHeaderRow(headerValues);
 	const rows = await sheet.getRows();

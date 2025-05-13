@@ -107,11 +107,11 @@ export async function runCommand(command: string) {
 export async function addNewSheet(
 	doc: GoogleSpreadsheet,
 	title: string,
-	sheetId: string,
+	sheetId: number,
 	headerValues: string[],
 ): Promise<GoogleSpreadsheetWorksheet> {
 	const sheet = await doc.addSheet({
-		sheetId: Number(sheetId),
+		sheetId,
 		title,
 		headerValues,
 	});
