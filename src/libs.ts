@@ -1,11 +1,14 @@
 import { exec } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import Ajv, { type JSONSchemaType } from "ajv";
 import dotenv from "dotenv";
 import type {
 	GoogleSpreadsheet,
 	GoogleSpreadsheetWorksheet,
 } from "google-spreadsheet";
+import type { GsI18NConfigSchema } from "./__generated__/schema";
+import gsI18nSchema from "./gs-i18n-schema.json";
 
 dotenv.config();
 
@@ -28,8 +31,6 @@ export interface GsI18nConfig {
 	};
 }
 
-let config: GsI18nConfig | null = null;
-
 export function getConfigPath(): string {
 	return path.join(process.cwd(), "gs-i18n.json");
 }
@@ -43,22 +44,29 @@ export function loadConfig() {
 		throw new Error("gs-i18n.json 설정 파일을 찾을 수 없습니다.");
 	}
 
+	const ajv = new Ajv();
+
+	const validate = ajv.compile(
+		gsI18nSchema as unknown as JSONSchemaType<GsI18NConfigSchema>,
+	);
+
 	const configPath = getConfigPath();
+	const configContent = fs.readFileSync(configPath, "utf-8");
+	const config = JSON.parse(configContent);
 
-	try {
-		const configContent = fs.readFileSync(configPath, "utf-8");
-		config = JSON.parse(configContent) as GsI18nConfig;
-
+	if (validate(config)) {
 		return config;
-	} catch (error) {
-		throw new Error(`설정 파일 로드 실패: ${error}`);
 	}
+
+	throw new Error(
+		`gs-i18n.json 설정 파일의 스키마가 유효하지 않습니다. ${JSON.stringify(validate.errors, null, 2)}`,
+	);
 }
 
 export function createConfigTemplate(): string {
 	const configTemplate = {
 		$schema:
-			"https://raw.githubusercontent.com/jgjgill/gs-i18n/main/gs-i18n-schema.json",
+			"https://raw.githubusercontent.com/jgjgill/gs-i18n/main/src/gs-i18n-schema.json",
 		spreadsheet: {
 			docId: "YOUR_SPREADSHEET_ID",
 			sheetId: 0,
