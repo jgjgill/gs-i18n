@@ -8,22 +8,20 @@
     "google-sheets",
     "i18n"
   ],
-  "author": {
-    "name": "jgjgill",
-    "email": "dbdltm22@naver.com",
-    "url": "https://github.com/jgjgill"
+  "homepage": "https://jgjgill.github.io/gs-i18n/",
+  "bugs": {
+    "url": "https://github.com/jgjgill/gs-i18n/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/jgjgill/gs-i18n.git"
   },
-  "homepage": "https://jgjgill.github.io/gs-i18n/",
-  "bugs": {
-    "url": "https://github.com/jgjgill/gs-i18n/issues"
+  "license": "ISC",
+  "author": {
+    "name": "jgjgill",
+    "email": "dbdltm22@naver.com",
+    "url": "https://github.com/jgjgill"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -36,45 +34,47 @@
       }
     }
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "bin": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --out-dir dist",
+    "build-schema-ts": "json2ts --input ./gs-i18n-schema.json --output ./src/__generated__/schema.ts",
     "dev-cli": "ts-node src/index.ts",
-    "test-scan": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' node_modules/i18next-scanner/bin/cli.js --config i18next-scanner.config.cjs",
-    "test": "pnpm run test-scan && ts-node src/download.ts",
-    "publish-package": "pnpm run build && changeset version && changeset publish",
-    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
     "lint": "biome check --write .",
-    "build-schema-ts": "json2ts --input ./gs-i18n-schema.json --output ./src/__generated__/schema.ts"
+    "publish-package": "pnpm run build && changeset version && changeset publish",
+    "test": "pnpm run test-scan && ts-node src/download.ts",
+    "test-scan": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' node_modules/i18next-scanner/bin/cli.js --config i18next-scanner.config.cjs"
   },
-  "bin": "./dist/index.js",
-  "license": "ISC",
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.29.4",
+  "dependencies": {
     "@clack/prompts": "^0.10.1",
     "@fxts/core": "^1.10.0",
-    "@types/node": "^22.15.17",
+    "ajv": "^8.17.1",
     "dotenv": "^16.5.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "^2.29.4",
+    "@types/node": "^22.15.17",
     "i18next-scanner": "^4.6.0",
     "json-schema-to-typescript": "^15.0.4",
-    "picocolors": "^1.1.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vitepress": "^1.6.3"
   },
-  "dependencies": {
-    "ajv": "^8.17.1"
+  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -8,25 +8,15 @@ importers:
 
   .:
     dependencies:
-      ajv:
-        specifier: ^8.17.1
-        version: 8.17.1
-    devDependencies:
-      '@biomejs/biome':
-        specifier: 1.9.4
-        version: 1.9.4
-      '@changesets/cli':
-        specifier: ^2.29.4
-        version: 2.29.4
       '@clack/prompts':
         specifier: ^0.10.1
         version: 0.10.1
       '@fxts/core':
         specifier: ^1.10.0
         version: 1.10.0
-      '@types/node':
-        specifier: ^22.15.17
-        version: 22.15.17
+      ajv:
+        specifier: ^8.17.1
+        version: 8.17.1
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
@@ -36,15 +26,25 @@ importers:
       google-spreadsheet:
         specifier: ^4.1.4
         version: 4.1.4(google-auth-library@9.15.1)
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 1.9.4
+        version: 1.9.4
+      '@changesets/cli':
+        specifier: ^2.29.4
+        version: 2.29.4
+      '@types/node':
+        specifier: ^22.15.17
+        version: 22.15.17
       i18next-scanner:
         specifier: ^4.6.0
         version: 4.6.0(typescript@5.8.3)
       json-schema-to-typescript:
         specifier: ^15.0.4
         version: 15.0.4
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.15.17)(typescript@5.8.3)
