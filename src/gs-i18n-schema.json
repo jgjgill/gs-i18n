@@ -6,7 +6,7 @@
 	"properties": {
 		"spreadsheet": {
 			"type": "object",
-			"required": ["docId"],
+			"required": ["docId", "sheetId"],
 			"properties": {
 				"docId": {
 					"type": "string",
@@ -23,13 +23,8 @@
 			"type": "object",
 			"required": ["email", "privateKey"],
 			"properties": {
-				"email": {
-					"type": "string",
-					"format": "email"
-				},
-				"privateKey": {
-					"type": "string"
-				}
+				"email": { "type": "string" },
+				"privateKey": { "type": "string" }
 			}
 		}
 	}
