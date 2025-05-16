@@ -6,6 +6,7 @@ export default defineConfig({
 	description: "Google Sheets i18n automation CLI site",
 	base: "/gs-i18n/",
 	head: [
+		['link', { rel: 'icon', href: '/gs-i18n/favicon.ico' }],
 		[
 			'script',
 			{async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-QPKEVPVLRH'}
@@ -19,6 +20,9 @@ export default defineConfig({
       gtag('config', 'G-QPKEVPVLRH');`
     ]
 	],
+	sitemap: {
+		hostname: "https://jgjgill.github.io/gs-i18n/",
+	},
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
