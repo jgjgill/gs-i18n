@@ -5,6 +5,20 @@ export default defineConfig({
 	title: "gs-i18n",
 	description: "Google Sheets i18n automation CLI site",
 	base: "/gs-i18n/",
+	head: [
+		[
+			'script',
+			{async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-QPKEVPVLRH'}
+		],
+		[
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QPKEVPVLRH');`
+    ]
+	],
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
