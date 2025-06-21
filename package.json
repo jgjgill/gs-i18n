@@ -45,7 +45,6 @@
     "build": "tsup src/index.ts --format cjs,esm --dts --out-dir dist",
     "build:schema-ts": "json2ts --input ./gs-i18n-schema.json --output ./src/__generated__/schema.ts",
     "dev:cli": "ts-node src/index.ts",
-    "dev:temp": "pnpm run test-scan && ts-node src/download.ts",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
