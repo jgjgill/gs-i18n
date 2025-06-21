@@ -15,6 +15,8 @@ export const generateConfigContent = ({
 module.exports = {
   input: ["./src/**/*.{ts,tsx}", "!**/node_modules/**"],
   options: {
+    removeUnusedKeys: true,
+    sort: true,
     defaultLng: "${defaultLanguage}",
     lngs: ${JSON.stringify(selectedLanguages)},
     ns: ["common"],
