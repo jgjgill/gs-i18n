@@ -56,6 +56,10 @@ const makeLanguagesMap = (
 	const key = row.get(columnKeyToHeader.key);
 
 	each((language) => {
+		if (!key) {
+			return;
+		}
+
 		const translatedExpression = row.get(columnKeyToHeader[language]);
 
 		if (!acc[language]) {
