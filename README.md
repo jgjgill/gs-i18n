@@ -37,7 +37,7 @@ gs-i18n
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/jgjgill/gs-i18n/main/gs-i18n-schema.json",
+  "$schema": "https://raw.githubusercontent.com/jgjgill/gs-i18n/main/src/gs-i18n-schema.json",
   "spreadsheet": {
     "docId": "YOUR_SPREADSHEET_ID",
     "sheetId": 0
