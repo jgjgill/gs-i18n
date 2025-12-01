@@ -248,8 +248,6 @@ async function runI18nextScanner() {
 
 		console.log(lngs, loadPath, savePath);
 
-		s.message(`설정 파일 사용: ${configFilePath}`);
-
 		await runCommand(`npx i18next-scanner --config ${configFilePath}`);
 
 		s.stop("i18next-scanner가 성공적으로 실행되었습니다.");
