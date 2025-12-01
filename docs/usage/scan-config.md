@@ -2,6 +2,12 @@
 
 i18next-scanner 설정 파일 생성 기능은 프로젝트에 맞는 i18next-scanner 설정을 인터랙티브하게 생성해요. 이는 다국어 관리의 첫 번째 단계로, 프로젝트의 기본 구조를 설정해요.
 
+::: info i18next-scanner란?
+[i18next-scanner](https://github.com/i18next/i18next-scanner)는 코드에서 사용된 다국어 키(translation key)를 자동으로 추출하는 도구예요. `t('welcome')` 같은 번역 함수 호출을 스캔하여 JSON 파일로 만들어줍니다.
+:::
+
+<video src="/scan-config-example.mov" controls style="width: 100%; max-width: 800px;"></video>
+
 ## 기능 개요
 
 다음 기능을 수행해요.

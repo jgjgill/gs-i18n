@@ -2,6 +2,8 @@
 
 스프레드시트 정보 조회 기능은 현재 연결된 Google Spreadsheet의 기본 정보와 시트 목록을 확인할 수 있어요. 이는 gs-i18n의 가장 기본적인 기능으로, 설정이 올바르게 되었는지 확인할 때 유용해요.
 
+<video src="/info-example.mov" controls style="width: 100%; max-width: 800px;"></video>
+
 ## 기능 개요
 
 다음 정보를 제공해요.

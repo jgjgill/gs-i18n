@@ -2,6 +2,8 @@
 
 다국어 파일 스캔 기능은 i18next-scanner를 실행하여 코드베이스에서 번역 키를 추출하고 JSON 파일을 생성해요. 이는 실제 번역 작업의 기반이 되어요.
 
+<video src="/scan-example.mov" controls style="width: 100%; max-width: 800px;"></video>
+
 ## 기능 개요
 
 다음 기능을 수행해요.

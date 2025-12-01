@@ -2,6 +2,8 @@
 
 번역 다운로드 기능은 Google Sheets의 번역 데이터를 로컬 JSON 파일로 가져와요. 번역가가 작업한 내용을 애플리케이션에 적용하는 마지막 단계에요.
 
+<video src="/download-example.mov" controls style="width: 100%; max-width: 800px;"></video>
+
 ## 기능 개요
 
 다음 기능을 수행해요.
@@ -133,5 +135,5 @@ for (const [language, translations] of Object.entries(languagesMap)) {
 :::
 
 ::: tip 번역 확인
-시트에 "\_N/A"인 값은 누락되어요. 이는 번역가가 아직 작업하지 않은 항목이에요.
+시트에 "\_N/A"인 값은 누락되어요. 이는 번역이 불필요한 값이에요.
 :::

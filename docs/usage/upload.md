@@ -2,6 +2,8 @@
 
 번역 업로드 기능은 로컬 JSON 파일의 번역 데이터를 Google Sheets에 동기화해요. 이를 통해 개발자가 추가한 새로운 번역 키를 번역가와 공유할 수 있어요.
 
+<video src="/upload-example.mov" controls style="width: 100%; max-width: 800px;"></video>
+
 ## 기능 개요
 
 다음 기능을 수행해요.

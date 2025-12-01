@@ -4,6 +4,8 @@
 
 **gs-i18n**은 Google Spreadsheet를 활용하여 다국어 번역을 효율적으로 관리할 수 있는 CLI 도구에요. 개발자와 번역가가 하나의 중앙화된 플랫폼에서 협업할 수 있도록 설계되었어요.
 
+> 💡 만들게 된 계기: [gs-i18n: Google Sheets와 i18next를 활용한 다국어 관리 CLI 도구 개발기](https://jgjgill-blog.netlify.app/post/gs-i18n-cli-tool-development/)
+
 ## 특징
 
 - 🔄 **양방향 동기화**: 코드 ↔ Google Sheets 간 번역 데이터 자동 동기화
