@@ -96,7 +96,7 @@ export async function updateJsonFromSheet(): Promise<void> {
 				);
 
 				const jsonString = JSON.stringify(languagesMap[language], null, 2);
-				fs.promises.writeFile(localeJsonFilePath, jsonString, "utf-8");
+				await fs.promises.writeFile(localeJsonFilePath, jsonString, "utf-8");
 			});
 	} catch (error) {
 		throw new Error(`Download Error: ${error}`);

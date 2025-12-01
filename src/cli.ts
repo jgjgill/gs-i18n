@@ -235,19 +235,6 @@ async function runI18nextScanner() {
 			await createI18nextScannerConfig();
 		}
 
-		const config = require(configFilePath);
-
-		// 필요한 값 추출
-		const lngs = config.options?.lngs || [];
-
-		// loadPath 추출
-		const loadPath = config.options?.resource?.loadPath || "";
-
-		// savePath에서 경로와 파일명 분리
-		const savePath = config.options?.resource?.savePath || "";
-
-		console.log(lngs, loadPath, savePath);
-
 		await runCommand(`npx i18next-scanner --config ${configFilePath}`);
 
 		s.stop("i18next-scanner가 성공적으로 실행되었습니다.");

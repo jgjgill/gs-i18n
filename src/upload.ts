@@ -113,17 +113,17 @@ async function updateTranslationsFromKeyMapToSheet(
 
 	const rowsToDelete = rows.filter((row) => {
 		const key = row.get(columnKeyToHeader.key);
-		return key === undefined && !translatedMap[key];
+		return !(key && translatedMap[key]);
 	});
 
 	if (rowsToDelete.length > 0) {
 		console.log(`삭제할 행 수: ${rowsToDelete.length}`);
 
-		fx(rowsToDelete)
+		await fx(rowsToDelete)
 			.toAsync()
-			.each((row) => {
+			.each(async (row) => {
 				console.log(`삭제 중: ${row.get(columnKeyToHeader.key)}`);
-				row.delete();
+				await row.delete();
 			});
 	}
 }
