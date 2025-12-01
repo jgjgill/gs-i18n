@@ -1,5 +1,11 @@
 # gs-i18n
 
+## 1.0.5
+
+### Patch Changes
+
+- remove message
+
 ## 1.0.4
 
 ### Patch Changes
