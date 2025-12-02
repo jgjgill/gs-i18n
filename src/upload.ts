@@ -29,13 +29,20 @@ interface SheetRow {
 /**
  * 시트에 사용될 row로 데이터 형식을 변환하는 함수
  * translatedMap으로 만들어진 데이터 형식을 변환시키는 작업을 진행
+ * @param key - 번역 키
+ * @param translations - 언어별 번역 값 객체
  * @example
- * { '키': '이름', '한글': '이름', '영어': '', '일본어': '' },
- * { '키': '이름_one', '한글': '_N/A', '영어': '', '일본어': '_N/A' },
- * { '키': '이름_other', '한글': '이름', '영어': '', '일본어': '' }
+ * updateSheetRow('이름', { ko: '이름', en: 'name' })
+ * // => { '키': '이름', '한글': '이름', '영어': 'name', '일본어': '' }
+ *
+ * updateSheetRow('이름_one', { ko: '_N/A', ja: '_N/A' })
+ * // => { '키': '이름_one', '한글': '_N/A', '영어': '', '일본어': '_N/A' }
+ *
+ * updateSheetRow('이름_other', { ko: '이름', en: 'name' })
+ * // => { '키': '이름_other', '한글': '이름', '영어': 'name', '일본어': '' }
  */
 
-function updateSheetRow(
+export function updateSheetRow(
 	key: string,
 	translations: TranslationsByLanguage,
 ): SheetRow {
@@ -50,7 +57,7 @@ function updateSheetRow(
 	return updatedRow;
 }
 
-function makeUpdateSheetRow(
+export function makeUpdateSheetRow(
 	result: SheetRow,
 	language: [LanguageCode, TranslationValue],
 ): SheetRow {
